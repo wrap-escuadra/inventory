@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\SupplierStatus;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 use App\Entity\Supplier;
+
 
 
 /**
@@ -24,7 +27,10 @@ class ProductController extends Controller
      */
     public function index(ProductRepository $productRepository): Response
     {
-        dump($productRepository->findAll());
+//        $em = $this->getDoctrine();
+//        $products = $em-
+//        dd($products);
+
         return $this->render('product/index.html.twig', ['products' => $productRepository->findAll()]);
     }
 
@@ -34,10 +40,19 @@ class ProductController extends Controller
     public function new(Request $request): Response
     {
 
-//        $supplier = $this->getDoctrine()->getRepository(Supplier::class)->findAll();
         $product = new Product();
+        $choices = $this->suppliers();
+        $supplier_status = $this->suppliers_status();
+        $options = [
+            'suppliers' => [
+                'choices' => $choices
+            ],
+            'suppstatus' => [
+                'choices' => $supplier_status
+            ]
+        ];
 
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product,$options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -54,6 +69,9 @@ class ProductController extends Controller
         ]);
     }
 
+
+
+
     /**
      * @Route("/{id}", name="product_show", methods="GET")
      */
@@ -67,8 +85,20 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $choices = $this->suppliers();
+        $supplier_status = $this->suppliers_status();
+        $options = [
+            'suppliers' => [
+                'choices' => $choices
+            ],
+            'suppstatus' => [
+                'choices' => $supplier_status
+            ]
+        ];
+
+        $form = $this->createForm(ProductType::class, $product , $options);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -94,5 +124,46 @@ class ProductController extends Controller
         }
 
         return $this->redirectToRoute('product_index');
+    }
+
+    public function suppliers(){
+//        $data  = array(
+//            'choices' => [
+//                'One' => '1',
+//                'Two' => '2'
+//            ]
+//        );
+        $data['-select one-'] = '';
+        $em = $this->getDoctrine()->getManager();
+        $suppliers = $em->getRepository(Supplier::class)->findAll();
+
+
+        foreach($suppliers as $supp){
+            $data[$supp->name] = $supp->id;
+        }
+
+        return $data;
+
+
+    }
+
+    /**
+     * @Route("/testing")
+     */
+    public function suppliers_status(){
+
+        $data['-select one-'] = '';
+        $em = $this->getDoctrine()->getManager();
+        $suppliers = $em->getRepository(SupplierStatus::class)->findAll();
+
+//dd($suppliers);
+        foreach($suppliers as $supp){
+            $data[$supp->status_desc] = $supp->id;
+        }
+
+//        return $this->json($data);
+        return $data;
+
+
     }
 }

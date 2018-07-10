@@ -15,7 +15,7 @@ class Supplier
      * @ORM\Column(type="integer")
      * @ORM\OneToMany(targetEntity="App\Entity\Supplier")
      */
-    private $id;
+    public $id;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -25,7 +25,7 @@ class Supplier
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $name;
+    public $name;
 
     /**
      * @ORM\Column(type="smallint")

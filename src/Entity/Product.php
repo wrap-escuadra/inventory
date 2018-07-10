@@ -62,6 +62,11 @@ class Product
      */
     private $created_at;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $product_status;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -176,6 +181,18 @@ class Product
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getProductStatus(): ?int
+    {
+        return $this->product_status;
+    }
+
+    public function setProductStatus(?int $product_status): self
+    {
+        $this->product_status = $product_status;
 
         return $this;
     }
