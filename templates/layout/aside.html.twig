@@ -7,21 +7,22 @@
             <li class="header   ">
                 Admin
             </li>
-            <li class="   ">
+            <li class=" {% if app.request.attributes.get('_route') == 'product_index'  %} {{ 'active' }} {% endif %} ">
                     <a href="{{path('product_index')}}" >
                     <i class="fa fa-shopping-cart"></i>            <span>Product</span>
                 </a>
             </li>
-            <li class="   ">
+            <li class="{% if app.request.attributes.get('_route') == 'supplier_index'  %} {{ 'active' }} {% endif %}   ">
                 <a href="{{ path('supplier_index') }}" >
                     <i class="fa fa-users"></i>            <span>Supplier</span>
                 </a>
             </li>
 
-            <li class="   ">
+            <li class=" {% if app.request.attributes.get('_route') == 'supplier_status_index'  %} {{ 'active' }} {% endif %}  ">
                 <a href="{{ path('supplier_status_index') }}" >
                     <i class="fa fa-list-alt"></i>           <span>Labels</span>
                 </a>
+
             </li>
 
             <li class="header   ">

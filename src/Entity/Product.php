@@ -28,7 +28,7 @@ class Product
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Supplier")
+     *
      */
     private $supplier_id;
 
@@ -66,6 +66,8 @@ class Product
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $product_status;
+
+
 
     public function __construct()
     {
@@ -106,9 +108,10 @@ class Product
         return $this->supplier_id;
     }
 
-    public function setSupplierId(?int $supplier_id): self
+    public function setSupplierId( $supplier_id): self
     {
         $this->supplier_id = $supplier_id;
+        $this->supplier_id = $supplier_id instanceof Product ? $supplier_id->getId() : $supplier_id;
 
         return $this;
     }
@@ -196,4 +199,31 @@ class Product
 
         return $this;
     }
+
+
+//-----
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Supplier", inversedBy="products", fetch="EAGER")
+     * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     */
+    private $supplier;
+
+    public function getSupplier(): ?Supplier
+    {
+        return $this->supplier;
+    }
+
+//    public function setSupplier(?Supplier $supplier): self
+//    {
+//        $this->supplier = $supplier_;
+//
+//        return $this;
+//    }
+
+
+
+
+
+
 }

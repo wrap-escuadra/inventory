@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +23,11 @@ class SupplierStatus
      */
     public $status_desc;
 
+
+    public function __construct()
+    {
+
+    }
     public function getId()
     {
         return $this->id;
@@ -37,4 +44,9 @@ class SupplierStatus
 
         return $this;
     }
+
+
+
+
+
 }

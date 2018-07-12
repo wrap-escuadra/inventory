@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SupplierRepository")
  */
@@ -13,7 +14,6 @@ class Supplier
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\Entity\Supplier")
      */
     public $id;
 
@@ -47,9 +47,21 @@ class Supplier
      */
     private $created_at;
 
+
+    //---
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="supplier" )
+     * ORM\@ORM\JoinColumn(name="id",referencedColumnName="supplier_id
+     */
+    private $products;
+
+    //--
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
+        $this->products = new ArrayCollection();
+
     }
 
     public function getId()
@@ -128,4 +140,43 @@ class Supplier
 
         return $this;
     }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
+            // set the owning side to null (unless already changed)
+            if ($product->getSupplier() === $this) {
+                $product->setSupplier(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
 }

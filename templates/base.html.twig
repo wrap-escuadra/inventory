@@ -40,7 +40,8 @@
 
 </head>
 
-<body id="easyadmin-list-Product" class="easyadmin sidebar-mini list list-product ">
+<body id="easyadmin-list-Product" class="easyadmin sidebar-mini list list-product
+{%   if app.request.cookies.get('sidebarClosed') == false %}{{ 'sidebar-collapse' }}{% endif %}">
 <div class="wrapper">
     <header class="main-header">
         <nav class="navbar" role="navigation">
@@ -60,6 +61,7 @@
                         <span class="sr-only">Logged in as</span>
 
                         <i class="hidden-xs fa fa-user-times"></i>
+                        {{app.request.cookies.get('sidebarClosed')}}
                         Anonymous User
                     </li>
                 </ul>
@@ -280,7 +282,21 @@
     </div>
 </div>
 
+<script type="text/javascript">
 
+    $(function(){
+        console.log($('.easyadmin.sidebar-mini').hasClass('sidebar-collapse'));
+        $('.sidebar-toggle').click(function(){
+            let sidebar = !$('.easyadmin.sidebar-mini').hasClass('sidebar-collapse');
+            console.log(sidebar);
+            var date = new Date();
+            date.setTime(date.getTime()+(2*60*60*1000));
+            var expires = "; expires="+date.toGMTString();// console.log("sidebarClosed="+sidebar+"; Smith; path=/"+ expires);
+            document.cookie = "sidebarClosed="+sidebar+"; Smith; path=/"+ expires
+
+        });
+    })
+</script>
 {% block scripts %}
 
 {% endblock %}

@@ -27,11 +27,8 @@ class ProductController extends Controller
      */
     public function index(ProductRepository $productRepository): Response
     {
-//        $em = $this->getDoctrine();
-//        $products = $em-
-//        dd($products);
-
-        return $this->render('product/index.html.twig', ['products' => $productRepository->findAll()]);
+        $product = $productRepository->findAll();
+        return $this->render('product/index.html.twig', ['products' => $product]);
     }
 
     /**
@@ -39,28 +36,25 @@ class ProductController extends Controller
      */
     public function new(Request $request): Response
     {
-
         $product = new Product();
-        $choices = $this->suppliers();
-        $supplier_status = $this->suppliers_status();
-        $options = [
-            'suppliers' => [
-                'choices' => $choices
-            ],
-            'suppstatus' => [
-                'choices' => $supplier_status
-            ]
-        ];
+        $form = $this->createForm(ProductType::class, $product);
 
-        $form = $this->createForm(ProductType::class, $product,$options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
-            $em->flush();
 
-            return $this->redirectToRoute('product_index');
+            $em = $this->getDoctrine()->getManager();
+            $computed_price = ( 1 + ($form['interest_rate']->getData() / 100)) * $form['supplier_price']->getData();
+            $product->setComputedPrice($computed_price);
+
+
+          $em->persist(  $product->setSupplierId($request->request->get("product")['supplier_id']));
+
+          $em->persist($product);
+
+          $em->flush();
+
+//            return $this->redirectToRoute('product_index');
         }
 
         return $this->render('product/new.html.twig', [
@@ -77,6 +71,8 @@ class ProductController extends Controller
      */
     public function show(Product $product): Response
     {
+
+//        dd($product);
         return $this->render('product/show.html.twig', ['product' => $product]);
     }
 
@@ -85,23 +81,21 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product): Response
     {
-        $choices = $this->suppliers();
-        $supplier_status = $this->suppliers_status();
-        $options = [
-            'suppliers' => [
-                'choices' => $choices
-            ],
-            'suppstatus' => [
-                'choices' => $supplier_status
-            ]
-        ];
 
-        $form = $this->createForm(ProductType::class, $product , $options);
+
+        $form = $this->createForm(ProductType::class, $product );
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+//dump($product);
+            $computed_price = ( 1 + ($form['interest_rate']->getData() / 100)) * $form['supplier_price']->getData();
+            $product->setSupplierId($form['supplier_id']->getData()->id);
+            $product->setComputedPrice($computed_price);
+//dd($product);
+            $em =   $this->getDoctrine()->getManager();
+//            dump($product->getSupplier()->name);
+//            $em->persist($product);
+            $em->flush();
 
             return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
         }
@@ -126,44 +120,20 @@ class ProductController extends Controller
         return $this->redirectToRoute('product_index');
     }
 
-    public function suppliers(){
-//        $data  = array(
-//            'choices' => [
-//                'One' => '1',
-//                'Two' => '2'
-//            ]
-//        );
-        $data['-select one-'] = '';
-        $em = $this->getDoctrine()->getManager();
-        $suppliers = $em->getRepository(Supplier::class)->findAll();
+//    public function suppliers(){
+//        $data['-select one-'] = '';
+//        $em = $this->getDoctrine()->getManager();
+//        $suppliers = $em->getRepository(Supplier::class)->findAll();
+//
+//
+//        foreach($suppliers as $supp){
+//            $data[$supp->name] = $supp->id;
+//        }
+//
+//        return $data;
+//
+//
+//    }
 
 
-        foreach($suppliers as $supp){
-            $data[$supp->name] = $supp->id;
-        }
-
-        return $data;
-
-
-    }
-
-    /**
-     * @Route("/testing")
-     */
-    public function suppliers_status(){
-
-        $data['-select one-'] = '';
-        $em = $this->getDoctrine()->getManager();
-        $suppliers = $em->getRepository(SupplierStatus::class)->findAll();
-
-//dd($suppliers);
-        foreach($suppliers as $supp){
-            $data[$supp->status_desc] = $supp->id;
-        }
-
-//        return $this->json($data);
-        return $data;
-
-
-    }
 }

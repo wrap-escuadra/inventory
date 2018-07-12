@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\SupplierStatus;
+
 /**
  * @Route("/supplier")
  */
@@ -29,7 +31,8 @@ class SupplierController extends Controller
     public function new(Request $request): Response
     {
         $supplier = new Supplier();
-        $form = $this->createForm(SupplierType::class, $supplier);
+        $supplierStatus = $this->choiceSupplierStatus();
+        $form = $this->createForm(SupplierType::class, $supplier, ['custom' => ['choices' => $supplierStatus]]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,5 +89,17 @@ class SupplierController extends Controller
         }
 
         return $this->redirectToRoute('supplier_index');
+    }
+
+    public function choiceSupplierStatus(){
+        $data['-select one-'] = '';
+        $em = $this->getDoctrine()->getManager();
+        $suppliers = $em->getRepository(SupplierStatus::class)->findAll();
+
+        foreach($suppliers as $supp){
+            $data[$supp->status_desc] = $supp->id;
+        }
+
+        return $data;
     }
 }

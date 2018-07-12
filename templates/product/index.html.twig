@@ -16,7 +16,7 @@
                 <th>Interest</th>
                 <th>Computed</th>
                 <th>Online Price</th>
-                <th>Img</th>
+                {#<th>Img</th>#}
                 <th>Date Created</th>
                 <th>actions</th>
             </tr>
@@ -27,13 +27,16 @@
                 {#<td>{{ product.id }}</td>#}
                 <td>{{ product.productCode }}</td>
                 <td>{{ product.description }}</td>
-                <td>{{ product.supplierId }}</td>
+                <td>
+                    {#{{ product.supplierId }}#}
+                    {{  product.supplier().name is defined ? product.supplier().name : ''  }}
+                </td>
                 <td>{{ product.supplierPrice }}</td>
                 <td>{{ product.interestRate }}</td>
                 <td>{{ product.computedPrice }}</td>
                 <td>{{ product.onlinePrice }}</td>
                 <td>{{ product.createdAt|date('M d,\'y h:i A') }}</td>
-                <td>{{ product.img }}</td>
+                {#<td>{{ product.img }}</td>#}
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
