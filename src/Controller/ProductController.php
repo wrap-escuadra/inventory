@@ -12,8 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+use App\Service\FileUploader;
 use App\Entity\Supplier;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 
@@ -34,27 +35,34 @@ class ProductController extends Controller
     /**
      * @Route("/new", name="product_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $file): Response
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $supplier = $this->getDoctrine()->getRepository(Supplier::class)->findAll();
+        $choices = ['choices' => $supplier];
+
+        $form = $this->createForm(ProductType::class, $product ,$choices);
+
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file->uploadDirectory('uploads/file');
+            if($form['img']->getData()){
+                $file_name = $file->upload($form['img']->getData());
+                $product->setImg($file_name);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $computed_price = ( 1 + ($form['interest_rate']->getData() / 100)) * $form['supplier_price']->getData();
             $product->setComputedPrice($computed_price);
 
+            $supplier = $this->getDoctrine()->getRepository(Supplier::class)->find($form['supplier_id']->getData());
+            $product->setSupplier($supplier);
+            $em->persist( $product) ;
+            $em->flush();
 
-          $em->persist(  $product->setSupplierId($request->request->get("product")['supplier_id']));
-
-          $em->persist($product);
-
-          $em->flush();
-
-//            return $this->redirectToRoute('product_index');
+//            return  $this->redirectToRoute('product_edit',['id'=> $product->getId()]);
         }
 
         return $this->render('product/new.html.twig', [
@@ -71,30 +79,38 @@ class ProductController extends Controller
      */
     public function show(Product $product): Response
     {
-
-//        dd($product);
         return $this->render('product/show.html.twig', ['product' => $product]);
     }
 
     /**
      * @Route("/{id}/edit", name="product_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Product $product): Response
+    public function edit(Request $request, Product $product, FileUploader $fileupload ) : Response
     {
+        $supplier = $this->getDoctrine()->getRepository(Supplier::class)->findAll();
+        $choices = ['choices' => $supplier];
+//        dump($this->getParameter('upload_path').$product->getImg());
+        $img = $this->getParameter('upload_path').$product->getImg();
+        if($product->getImg()){
+            $product->setImg(
+                new File($img)
+            );
+        }
 
 
-        $form = $this->createForm(ProductType::class, $product );
+
+        $form = $this->createForm(ProductType::class, $product, $choices );
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-//dump($product);
+        if ($form->isSubmitted() && $form->isValid()){
+            if($form['img']->getData()){
+                $file_name = $fileupload->upload($form['img']->getData());
+                $product->setImg($file_name);
+            }
             $computed_price = ( 1 + ($form['interest_rate']->getData() / 100)) * $form['supplier_price']->getData();
-            $product->setSupplierId($form['supplier_id']->getData()->id);
             $product->setComputedPrice($computed_price);
-//dd($product);
+
             $em =   $this->getDoctrine()->getManager();
-//            dump($product->getSupplier()->name);
-//            $em->persist($product);
             $em->flush();
 
             return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);

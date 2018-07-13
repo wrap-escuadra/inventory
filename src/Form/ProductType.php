@@ -4,6 +4,7 @@ namespace App\Form;
 use App\Entity\Product;
 use App\Entity\Supplier;
 
+use PhpParser\Node\Expr\Cast\Int_;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 
@@ -22,63 +23,62 @@ class ProductType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $options['suppliers'] = [
-            'choices' => [
-                '-select-' => '',
-                'two' => 2,
-                'one' => 1
-            ]
-        ];
+        foreach ($options['choices'] as $opt){
+            $choices[$opt->name] = $opt->id;
+        }
+//dd($builder);
         $builder
             ->add('product_code')
             ->add('description')
-            ->add('supplier_id', EntityType::class, [
-                'class' => Supplier::class,
-//                'choice_label' => function(Supplier $supplier) {
-//                    return $supplier->getName();
-//                },
-                'choice_label' => 'name',
-                'placeholder' => '-select supplier-',
-                'choice_value' => 'id'
-
-//                'expanded' => true,
-//                'multiple'=> true,
-//            'sortable' => true
+//            ->add('supplier_id', EntityType::class, [
+//                'class' => Supplier::class,
+//                'choice_label' => 'name',
+//                'choice_value' => 'id',
+//                'placeholder' => '-select supplier-',
 //                'constraints' => array(
 //                    new Assert\Type(array(
 //                        'type' => 'integer',
 //                        'message' => 'number lang dito'
 //                    ))
 //                )
+//            ])
+            ->add('supplier_id',ChoiceType::class, [
+                'choices'=> $choices,
+                'placeholder' => '-select supplier',
+                'constraints' => array(
+                    new Assert\Type(array(
+                        'type' => 'integer',
+                        'message' => 'number lang dito'
+                    ))
+                ),
             ])
-
-//            ->add('supplier_id', ChoiceType::class, $options['suppliers'])
             ->add('supplier_price')
             ->add('interest_rate')
             ->add('computed_price',TextType::class, [
-
                     'attr' => ['readonly' => 'readonly']
-
             ])
             ->add('online_price')
             ->add('img', FileType::class, [
+                'data_class' => null,
                 'label' => 'Select image',
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control',
-                    'accept' => 'image/jpg,image/jpeg',
+                    'accept' => 'image/jpg,image/jpeg, image/png',
                 ]
             ]);
 
     }
 
+
+
+
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Product::class,
-//            'suppliers' => null,
-
-
+            'choices' => null,
         ]);
     }
 }

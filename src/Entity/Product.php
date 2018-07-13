@@ -111,7 +111,7 @@ class Product
     public function setSupplierId( $supplier_id): self
     {
         $this->supplier_id = $supplier_id;
-        $this->supplier_id = $supplier_id instanceof Product ? $supplier_id->getId() : $supplier_id;
+//        $this->supplier_id = $supplier_id instanceof Product ? $supplier_id->getId() : $supplier_id;
 
         return $this;
     }
@@ -214,12 +214,12 @@ class Product
         return $this->supplier;
     }
 
-//    public function setSupplier(?Supplier $supplier): self
-//    {
-//        $this->supplier = $supplier_;
-//
-//        return $this;
-//    }
+    public function setSupplier(?Supplier $supplier): self
+    {
+        $this->supplier = $supplier;
+
+        return $this;
+    }
 
 
 

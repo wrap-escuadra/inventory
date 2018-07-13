@@ -22,7 +22,8 @@ class SupplierController extends Controller
      */
     public function index(SupplierRepository $supplierRepository): Response
     {
-        return $this->render('supplier/index.html.twig', ['suppliers' => $supplierRepository->findAll()]);
+        $suppliers = $supplierRepository->findAll();
+        return $this->render('supplier/index.html.twig', ['suppliers' => $suppliers]);
     }
 
     /**

@@ -51,7 +51,7 @@ class Supplier
     //---
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="supplier" )
-     * ORM\@ORM\JoinColumn(name="id",referencedColumnName="supplier_id
+     * ORM\@ORM\JoinColumn(name="id",referencedColumnName="supplier_id")
      */
     private $products;
 

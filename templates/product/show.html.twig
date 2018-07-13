@@ -20,8 +20,8 @@
                 <td>{{ product.description }}</td>
             </tr>
             <tr>
-                <th>Supplier_id</th>
-                <td>{{ product.supplierId }}</td>
+                <th>Supplier</th>
+                <td>{{ product.supplier.name }}</td>
             </tr>
             <tr>
                 <th>Supplier_price</th>
@@ -39,16 +39,21 @@
                 <th>Online_price</th>
                 <td>{{ product.onlinePrice }}</td>
             </tr>
+            {% if(product.img != "") %}
             <tr>
-                <th>Img</th>
-                <td>{{ product.img }}</td>
+                <th>Image</th>
+                <td><img class="img-thumbnail image img-responsive img-circle" src="{{ asset('uploads/') }}{{ product.img }}" />   </td>
             </tr>
+            {% endif %}
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-md-6 "><a href="{{ path('product_index') }}">back to list</a></div>
+        <div class="col-md-6 text-right"><a href="{{ path('product_edit', {'id': product.id}) }}">edit</a></div>
 
-    <a href="{{ path('product_index') }}">back to list</a>
 
-    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+
+    </div>
 
     {{ include('product/_delete_form.html.twig') }}
 {% endblock %}
