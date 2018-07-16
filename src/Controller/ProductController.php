@@ -26,7 +26,7 @@ class ProductController extends Controller
     /**
      * @Route("/", name="product_index", methods="GET")
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, Request $request): Response
     {
         $product = $productRepository->findAll();
         return $this->render('product/index.html.twig', ['products' => $product]);
@@ -38,6 +38,7 @@ class ProductController extends Controller
     public function new(Request $request, FileUploader $file): Response
     {
         $product = new Product();
+
         $supplier = $this->getDoctrine()->getRepository(Supplier::class)->findAll();
         $choices = ['choices' => $supplier];
 
@@ -87,15 +88,17 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product, FileUploader $fileupload ) : Response
     {
+
+     $old_image = $product->getImg();
         $supplier = $this->getDoctrine()->getRepository(Supplier::class)->findAll();
         $choices = ['choices' => $supplier];
 //        dump($this->getParameter('upload_path').$product->getImg());
-        $img = $this->getParameter('upload_path').$product->getImg();
-        if($product->getImg()){
-            $product->setImg(
-                new File($img)
-            );
-        }
+//        $img = $this->getParameter('upload_path').$product->getImg();
+//        if($product->getImg()){
+//            $product->setImg(
+//                new File($img)
+//            );
+//        }
 
 
 
@@ -103,13 +106,18 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+
+
             if($form['img']->getData()){
+                $this->delete_img($old_image);
                 $file_name = $fileupload->upload($form['img']->getData());
                 $product->setImg($file_name);
+            }else{
+                $product->setImg($old_image);
             }
             $computed_price = ( 1 + ($form['interest_rate']->getData() / 100)) * $form['supplier_price']->getData();
             $product->setComputedPrice($computed_price);
-
+//            dd($computed_price);
             $em =   $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -150,6 +158,10 @@ class ProductController extends Controller
 //
 //
 //    }
+
+    private function delete_img($image_name){
+        unlink($this->getParameter('upload_path').$image_name);
+    }
 
 
 }
