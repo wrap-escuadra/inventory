@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00e6e3a2-163f-4db4-b670-fb651a38effe" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/public/fancybox/fancybox.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/fancybox/fancybox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/product/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,9 +53,10 @@
       <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/product/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="73" column="36" selection-start-line="73" selection-start-column="36" selection-end-line="73" selection-end-column="36" />
+            <state relative-caret-position="75">
+              <caret line="5" column="62" selection-start-line="5" selection-start-column="62" selection-end-line="5" selection-end-column="62" />
               <folding>
+                <element signature="e#196#220#0#HTML" expanded="true" />
                 <element signature="e#1119#1142#0#HTML" expanded="true" />
                 <element signature="e#1078#1101#0#HTML" expanded="true" />
               </folding>
@@ -347,18 +344,18 @@
       <workItem from="1531273321358" duration="26429000" />
       <workItem from="1531352375954" duration="8512000" />
       <workItem from="1531447733672" duration="19803000" />
-      <workItem from="1531704130502" duration="9280000" />
+      <workItem from="1531704130502" duration="9586000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85475000" />
+    <option name="totallyTimeSpent" value="85781000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2" y="23" width="1278" height="738" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6287263" visible="true" weight="0.30420712" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6287263" visible="true" weight="0.30420712" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -367,7 +364,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" sideWeight="0.37127373" side_tool="true" visible="true" weight="0.30420712" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.46753246" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.46753246" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -772,9 +769,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/product/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="73" column="36" selection-start-line="73" selection-start-column="36" selection-end-line="73" selection-end-column="36" />
+        <state relative-caret-position="75">
+          <caret line="5" column="62" selection-start-line="5" selection-start-column="62" selection-end-line="5" selection-end-column="62" />
           <folding>
+            <element signature="e#196#220#0#HTML" expanded="true" />
             <element signature="e#1119#1142#0#HTML" expanded="true" />
             <element signature="e#1078#1101#0#HTML" expanded="true" />
           </folding>

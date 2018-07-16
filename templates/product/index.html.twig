@@ -3,6 +3,7 @@
 {% block title %}Product index{% endblock %}
 {% block header %}
     <h1>Product index</h1>
+    <a href="{{ path('product_new') }}" class="btn btn-success  pull-right " style="margin-top:-30px"><i class="fa fa-plus-circle"></i>Create new</a>
 {% endblock %}
 {% block body %}
     <table class="table table-bordered ">
@@ -62,7 +63,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('product_new') }}">Create new</a>
+
 {% endblock %}
 
 {% block css %}
