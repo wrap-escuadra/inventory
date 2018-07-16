@@ -5,12 +5,13 @@
     <h1>Product index</h1>
 {% endblock %}
 {% block body %}
-    <table class="table table-bordered">
+    <table class="table table-bordered ">
         <thead class="thead-dark">
             <tr class="">
-                <th>Id</th>
+                <th>Image</th>
+
                 <th>Product_code</th>
-                <th>Description</th>
+                {#<th>Description</th>#}
                 <th>Supplier</th>
                 <th>Supplier price</th>
                 <th>Interest</th>
@@ -22,11 +23,22 @@
             </tr>
         </thead>
         <tbody>
+
         {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
+            <tr data-toggle="tooltip" data-placement="bottom" title="{{ product.description }}">
+                <td>
+
+                    {% if product.img != '' %}
+                        <a class="fancybox" rel="gallery1" href="{{ asset('uploads/'~product.img) }}" title="{{ product.description }}">
+                            <img class="img-fluid img-responsive " src="{{ asset('uploads/'~product.img) }}" alt="image deleted" style="max-width: 70px" />
+                        </a>
+
+                    {% else %}
+                        <img class="img-fluid img-responsive " src="{{ asset('_images/no_image.jpg') }}" style="max-width: 70px" />
+                    {% endif %}
+                </td>
                 <td>{{ product.productCode }}</td>
-                <td>{{ product.description }}</td>
+                {#<td>{{ product.description }}</td>#}
                 <td>
                     {#{{ product.supplierId }}#}
                     {{  product.supplier().name is defined ? product.supplier().name : ''  }}
@@ -51,4 +63,24 @@
     </table>
 
     <a href="{{ path('product_new') }}">Create new</a>
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+{% block scripts %}
+    {#<script type="text/javascript" src="http://fancyapps.com/fancybox/source/jquery.fancybox.pack.js?v=2.1.7"></script>#}
+    {#<link rel="stylesheet" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css?v=2.1.7">#}
+    <script src="{{ asset('fancybox/fancybox.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox.css') }}">
+    <script type="text/javascript">
+        $(function(){
+
+            $(".fancybox").fancybox();
+            $('[data-toggle="tooltip"]').tooltip();
+
+        });
+
+    </script>
+
 {% endblock %}
