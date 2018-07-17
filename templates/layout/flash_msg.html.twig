@@ -1,8 +1,7 @@
+
 {% for message in app.flashes('notice') %}
-    <div class="alert alert-info alert-dismissible fade show col-12" role="alert">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+<div class="alert alert-warning alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="text-decoration: none">&times;</a>
+    {{ message }}
+</div>
 {% endfor %}

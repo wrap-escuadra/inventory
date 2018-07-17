@@ -62,8 +62,8 @@ class ProductController extends Controller
             $product->setSupplier($supplier);
             $em->persist( $product) ;
             $em->flush();
-
-//            return  $this->redirectToRoute('product_edit',['id'=> $product->getId()]);
+            $this->addFlash('notice','Product successfully added');
+            return  $this->redirectToRoute('product_edit',['id'=> $product->getId()]);
         }
 
         return $this->render('product/new.html.twig', [
@@ -88,6 +88,7 @@ class ProductController extends Controller
      */
     public function edit(Request $request, Product $product, FileUploader $fileupload ) : Response
     {
+
 
      $old_image = $product->getImg();
         $supplier = $this->getDoctrine()->getRepository(Supplier::class)->findAll();
@@ -120,7 +121,7 @@ class ProductController extends Controller
 //            dd($computed_price);
             $em =   $this->getDoctrine()->getManager();
             $em->flush();
-
+            $this->addFlash('notice' ,'Product successfully updated');
             return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
         }
 
@@ -140,7 +141,7 @@ class ProductController extends Controller
             $em->remove($product);
             $em->flush();
         }
-
+        $this->addFlash('notice','Product successfully deleted.');
         return $this->redirectToRoute('product_index');
     }
 
