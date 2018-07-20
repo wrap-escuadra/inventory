@@ -24,7 +24,7 @@ div#flash-messages{
     padding: 10px;
     background: #fff;
     border-radius: 7px;
-    margin: 5px;
+    margin: 5px 0 5px 0;
     -webkit-box-shadow: 4px -2px 19px -5px rgba(15,2,8,1);
     -moz-box-shadow: 4px -2px 19px -5px rgba(15,2,8,1);
     box-shadow: 4px -2px 19px -5px rgba(15,2,8,1);
@@ -51,3 +51,39 @@ div#flash-messages{
     padding-right: 20px;
 
 }
+
+#overlay{
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    z-index: 1031;
+    opacity: .7;
+}
+
+
+#spinner{
+    background: url("/_images/spinner.gif") no-repeat;
+    background-size: cover;
+    width: 80px;
+    height: 80px;
+    position: fixed;
+    top: 46%;
+    right: 50%;
+    margin-right: -20px;
+    z-index: 1032;
+
+}
+
+.shadow{
+    -webkit-box-shadow: 10px 10px 30px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 30px -5px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 30px -5px rgba(0,0,0,0.75);
+}
+
+tip{
+    z-index: 10020;
+}
+.pointer{ cursor: pointer }

@@ -26,10 +26,29 @@ class ProductController extends Controller
     /**
      * @Route("/", name="product_index", methods="GET")
      */
-    public function index(ProductRepository $productRepository, Request $request): Response
+    public function index( Request $request): Response
     {
-        $product = $productRepository->findAll();
-        return $this->render('product/index.html.twig', ['products' => $product]);
+//        dd($request->query->all())
+        $query    = $this->getDoctrine()->getRepository(Product::class)->testfind($request);
+        $per_page = $request->query->getInt('per_page',10);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            $per_page/*limit per page*/
+        );
+
+        return $this->render('product/index.html.twig', [
+                'products' => $pagination,
+                'page' => $pagination->getCurrentPageNumber(),
+                'searchBy' => $request->query->get('searchBy', []),
+                'qsearch' => trim($request->query->get('qsearch','')),
+                'sort'=> $request->query->get('sort','p.created_at'),
+                'direction' => $request->query->get('direction','DESC'),
+                'per_page' => $per_page,
+                'layout' => $request->query->get('layout',1),
+        ]);
     }
 
     /**
@@ -161,7 +180,11 @@ class ProductController extends Controller
 //    }
 
     private function delete_img($image_name){
-        unlink($this->getParameter('upload_path').$image_name);
+
+        if($image_name  != '' && file_exists($this->getParameter('upload_path').$image_name))
+        {
+            unlink($this->getParameter('upload_path').$image_name);
+        }
     }
 
 

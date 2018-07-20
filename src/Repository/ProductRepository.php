@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use http\Env\Request;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -18,6 +19,33 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+
+//    public function findAll(Array $order= array('created_at' => 'DESC'))
+//    {
+//        return $this->findBy(array(), $order);
+//    }
+
+    public function testfind( $request)
+    {
+        $filter = $request->query->get('searchBy',false);
+        $qsearch = $request->query->get('qsearch','');
+
+        $result = $this->createQueryBuilder('p')
+            ->leftJoin('p.supplier','s')->addSelect('s');
+        if($filter){
+            foreach($filter as $searchby){
+                $result->orWhere($searchby.' LIKE :searchquery');
+                $result->setParameter('searchquery', '%'.trim($qsearch).'%');
+            }
+
+        }
+
+        $result->getQuery();
+
+        return $result;
+    }
+
+
 
 //    /**
 //     * @return Product[] Returns an array of Product objects

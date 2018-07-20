@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product List{% endblock %}
+{% block header %}
+    <h1>Product index</h1>
+    <a href="{{ path('product_new') }}" class="btn btn-success  pull-right " style="margin-top:-30px"><i class="fa fa-plus-circle"></i>Create new</a>
+{% endblock %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            {% for product in products %}
+                <div class="col-xs-12 prod-container" >
+                    <div class="col-sm-2 col-xs-3 prod-image text-center" style="padding: 0">
+                        {% if product.img != '' %}
+                            <a class="fancybox" rel="gallery1" href="{{ asset('uploads/'~product.img) }}" title="{{ product.description }}">
+                                <img class="img-fluid img-responsive " src="{{ asset('uploads/'~product.img) }}" alt="image deleted"  />
+                            </a>
+
+                        {% else %}
+                            <img class="img-fluid img-responsive " src="{{ asset('_images/no_image.jpg') }}"  />
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-10 col-xs-9 " style="padding: 7px">
+                        <div class="div-table">
+                            <div class="div-row">
+                                <div >Code</div>
+                                <div>
+                                    {{ product.productCode }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div >Description
+                                </div>
+                                <div>
+                                    {{ product.description }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div >Supplier</div>
+                                <div>
+                                    {{  product.supplier().name is defined ? product.supplier().name : ''  }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div >Supplier Price</div>
+                                <div>
+                                    {{ product.supplierPrice }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div >Interest</div>
+                                <div>
+                                    {{  product.interestRate }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div >Resell Value</div>
+                                <div>
+                                    {{  product.computedPrice  }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div >Online Price</div>
+                                <div>
+                                    {{  product.onlinePrice }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div >Date Added</div>
+                                <div>
+                                    {{ product.createdAt|date('M d,\'y h:i A') }}
+                                </div>
+                            </div>
+                            <div class="div-row">
+                                <div ></div>
+                                <div>
+                                    <a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-warning pull-right"  style="margin-left: 5px"  >show</a>
+                                    <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-primary pull-right">edit</a>
+                                </div>
+                            </div>
+
+                        </div   >
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <div class="navigation text-center">
+                {{ knp_pagination_render(products) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+{% block scripts %}
+    {#<script type="text/javascript" src="http://fancyapps.com/fancybox/source/jquery.fancybox.pack.js?v=2.1.7"></script>#}
+    {#<link rel="stylesheet" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css?v=2.1.7">#}
+    <script src="{{ asset('fancybox/fancybox.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('fancybox/fancybox.css') }}">
+    <script type="text/javascript">
+        $(function(){
+
+            $(".fancybox").fancybox();
+            $('[data-toggle="tooltip"]').tooltip();
+
+        });
+
+    </script>
+
+{% endblock %}
