@@ -3,53 +3,69 @@
 {% block title %}Product{% endblock %}
 
 {% block body %}
+    <style>
+        .div-row div:nth-child(1){
+            min-width: 300px;
+
+        }
+
+        .div-row div:nth-child(2){
+            padding-left: 10px;
+
+        }
+
+        .div-table{
+            font-size: 2rem;
+        }
+    </style>
     <div class="row">
         <div class="col-md-6 "><a href="{{ path('product_index') }}">back to list</a></div>
     </div>
     <h1>Product</h1>
+    <div class="col-md-12">
+    <div class="div-table div-table-striped div-table-bordered">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Product_code</th>
-                <td>{{ product.productCode }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Supplier</th>
-                <td>{{ product.supplier.name }}</td>
-            </tr>
-            <tr>
-                <th>Supplier_price</th>
-                <td>{{ product.supplierPrice }}</td>
-            </tr>
-            <tr>
-                <th>Interest_rate</th>
-                <td>{{ product.interestRate }}</td>
-            </tr>
-            <tr>
-                <th>Computed_price</th>
-                <td>{{ product.computedPrice }}</td>
-            </tr>
-            <tr>
-                <th>Online_price</th>
-                <td>{{ product.onlinePrice }}</td>
-            </tr>
+            <div class="div-row">
+                <div>Id</div>
+                <div>{{ product.id }}</div>
+            </div>
+            <div class="div-row">
+                <div>Product Code</div>
+                <div>{{ product.productCode }}</div>
+            </div>
+            <div class="div-row">
+                <div>Description</div>
+                <div>{{ product.description }}</div>
+            </div>
+            <div class="div-row">
+                <div>Supplier</div>
+                <div>{{ product.supplier.name is defined ? product.supplier.name : '' }}</div>
+            </div>
+            <div class="div-row">
+                <div>Supplier Price</div>
+                <div{{ product.supplierPrice }}</td>
+            </div>
+            <div class="div-row">
+                <div>Interest rate</div>
+                <div>{{ product.interestRate }}</div>
+            </div>
+            <div class="div-row">
+                <div>Computed   price</div>
+                <div>{{ product.computedPrice }}</div>
+            </div>
+            <div class="div-row">
+                <div>Online Price</div>
+                <div>{{ product.onlinePrice }}</div>
+            </div>
             {% if(product.img != "") %}
-            <tr>
-                <th>Image</th>
-                <td><img class="img-thumbnail image img-responsive img-circle" src="{{ asset('uploads/') }}{{ product.img }}" />   </td>
-            </tr>
+            <div class="div-row">
+                <div>Image</div>
+                <div><img class="img-thumbnail image img-responsive img-circle" src="{{ asset('uploads/') }}{{ product.img }}" />   </div>
+            </div>
             {% endif %}
-        </tbody>
-    </table>
+
+    </div>
+    </div>
     <div class="row">
 
         <div class="col-md-12 text-right"><a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-primary">edit</a></div>

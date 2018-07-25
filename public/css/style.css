@@ -41,8 +41,12 @@ div#flash-messages{
 .div-row > div{
     display: table-cell;
 }
-.div-row:hover > div{
+.div-table.div-table-hover:hover > div{
     background: #f4f4f5;
+}
+.div-table.div-table-bordered, .div-table.div-table-bordered div{
+    border: 1px solid darkgray;
+    border-collapse: collapse;
 }
 .div-row div:first-child{
     font-weight: bolder;
@@ -50,6 +54,10 @@ div#flash-messages{
     text-align: right;
     padding-right: 20px;
 
+}
+
+.div-table.div-table-striped .div-row:nth-child(odd){
+    background:#F6FbFa;
 }
 
 #overlay{

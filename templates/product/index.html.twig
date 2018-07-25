@@ -64,33 +64,33 @@
                 </tip>
             <ul class="dropdown-menu shadow">
                 <li class="dropdown-header text-bold">Date</li>
-                <li class=""><a href="{{ path('product_index',{ page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.created_at' , direction: 'asc'}) }}">ascending
+                <li class=""><a href="{{ path('product_index',{ per_page: per_page, page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.created_at' , direction: 'asc'}) }}">ascending
                         <i class=" {{ sort~direction == 'p.created_atasc' ? 'fa fa-check'}}" ></i>
                     </a>
                 </li>
-                <li class=""><a href="{{ path('product_index',{ page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.created_at' , direction: 'desc'}) }}">descending
+                <li class=""><a href="{{ path('product_index',{ per_page: per_page,page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.created_at' , direction: 'desc'}) }}">descending
                         <i class=" {{ sort~direction == 'p.created_atdesc' ? 'fa fa-check'}}" ></i>
                     </a>
                 </li>
                 <li class="divider"></li>
 
                 <li class="dropdown-header text-bold">Code</li>
-                <li class=""><a href="{{ path('product_index',{ page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.product_code' , direction: 'asc'}) }}">ascending
+                <li class=""><a href="{{ path('product_index',{ per_page: per_page,page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.product_code' , direction: 'asc'}) }}">ascending
                         <i class=" {{ sort~direction == 'p.product_codeasc' ? 'fa fa-check'}}" ></i>
                     </a>
                 </li>
-                <li class=""><a href="{{ path('product_index',{ page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.product_code' , direction: 'desc'}) }}">descending
+                <li class=""><a href="{{ path('product_index',{per_page: per_page, page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.product_code' , direction: 'desc'}) }}">descending
                         <i class=" {{ sort~direction == 'p.product_codedesc' ? 'fa fa-check'}}" ></i>
                     </a>
                 </li>
                 <li class="divider"></li>
 
                 <li class="dropdown-header text-bold">Resell Price</li>
-                <li class=""><a href="{{ path('product_index',{ page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.computed_price' , direction: 'asc'}) }}">ascending
+                <li class=""><a href="{{ path('product_index',{per_page: per_page, page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.computed_price' , direction: 'asc'}) }}">ascending
                         <i class=" {{ sort~direction == 'p.computed_priceasc' ? 'fa fa-check'}}" ></i>
                     </a>
                 </li>
-                <li class=""><a href="{{ path('product_index',{ page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.computed_price' , direction: 'desc'}) }}">descending
+                <li class=""><a href="{{ path('product_index',{per_page: per_page, page:page, searchBy:searchBy , qsearch:qsearch, sort: 'p.computed_price' , direction: 'desc'}) }}">descending
                         <i class=" {{ sort~direction == 'p.computed_pricedesc' ? 'fa fa-check'}}" ></i>
                     </a>
                 </li>
@@ -119,11 +119,18 @@
                 <li class="divider"></li>
                 <li class="dropdown-header">Layout</li>
                 <li>
-                    <a href="{{ path('product_index', { page:page, per_page:per_page, searchBy:searchBy, qsearch:qsearch, sort:sort,direction:direction, layout:1 }) }}"><i class="fa fa-th-large"></i></a>
+                    <a href="{{ path('product_index', { page:page, per_page:per_page, searchBy:searchBy, qsearch:qsearch, sort:sort,direction:direction, layout:1 }) }}">
+                        <i class="fa fa-th-large"></i>
+                         <i class="{{ layout == 1 ? 'fa fa-check' }} "></i>
+                    </a>
 
                 </li>
                 <li>
-                    <a href="{{ path('product_index', { page:page, per_page:per_page, searchBy:searchBy, qsearch:qsearch, sort:sort,direction:direction, layout:2 }) }}"><i class="fa fa-align-justify"></i></a>
+                    <a href="{{ path('product_index', { page:page, per_page:per_page, searchBy:searchBy, qsearch:qsearch, sort:sort,direction:direction, layout:2 }) }}">
+                        <i class="fa fa-align-justify"></i>
+                        <i class="{{ layout == 2 ? 'fa fa-check' }} "></i>
+                    </a>
+
                 </li>
             </ul>
         </span>
