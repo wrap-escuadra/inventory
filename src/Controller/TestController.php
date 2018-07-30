@@ -12,10 +12,11 @@ use App\Entity\Product;
 class TestController extends Controller
 {
     /**
-     * @Route("/test", name="test")
+     * @Route("/", name="test")
      */
     public function index(Request $request)
     {
+        return $this->redirectToRoute('product_index');
         $em = $this->getDoctrine()->getRepository(Product::class);
         $products = $em->findAll();
         $paginator  = $this->get('knp_paginator');

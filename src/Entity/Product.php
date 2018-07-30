@@ -33,7 +33,7 @@ class Product
     private $supplier_id;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float")
      */
     private $supplier_price;
 
