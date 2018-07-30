@@ -99,6 +99,7 @@ class ProductController extends Controller
      */
     public function show(Product $product): Response
     {
+//        dd($product);
         return $this->render('product/show.html.twig', ['product' => $product]);
     }
 
