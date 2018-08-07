@@ -158,8 +158,8 @@ class ProductController extends Controller
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($product);
-            $em->flush();
+            // $em->remove($product);
+            // $em->flush();
         }
         $this->addFlash('notice','Product successfully deleted.');
         return $this->redirectToRoute('product_index');
