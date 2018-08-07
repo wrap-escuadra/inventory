@@ -64,7 +64,7 @@ class SupplierStatusController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('notice' ,'Supplier successfully updated');
             return $this->redirectToRoute('supplier_status_edit', ['id' => $supplierStatus->getId()]);
         }
 

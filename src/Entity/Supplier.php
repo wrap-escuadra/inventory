@@ -173,6 +173,26 @@ class Supplier
     }
 
 
+    //-----
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SupplierStatus", inversedBy="", fetch="EAGER")
+     * @ORM\JoinColumn(name="status", referencedColumnName="id")
+     */
+    private $supplierStatus;
+
+    public function getSupplierStatus(): ?supplierStatus
+    {
+        return $this->supplierStatus;
+    }
+
+    public function setSupplier(?supplierStatus $supplierStatus): self
+    {
+        $this->supplier = $supplierStatus;
+
+        return $this;
+    }
+
 
 
 

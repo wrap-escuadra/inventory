@@ -7,7 +7,7 @@ $(window).on('load', function(){
 $(document).on('submit', 'form[data-confirmation]', function (event) {
     var $form = $(this),
         $confirm = $('#confirmationModal');
-
+        console.log($confirm.data('result'));
     if ($confirm.data('result') !== 'yes') {
         //cancel submit event
         event.preventDefault();

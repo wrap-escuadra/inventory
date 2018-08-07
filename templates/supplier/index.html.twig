@@ -24,7 +24,10 @@
                 <td>{{ supplier.id }}</td>
                 <td>{{ supplier.code }}</td>
                 <td>{{ supplier.name }}</td>
-                <td>{{ supplier.status }}</td>
+                <td>
+                    {# {{ supplier.status }} #}
+                    {{ supplier.supplierStatus().statusDesc is defined ? supplier.supplierStatus().statusDesc : ''}}
+                </td>
                 <td>{{ supplier.contactNo }}</td>
                 <td>{{ supplier.location }}</td>
                 <td>{{ supplier.createdAt ? supplier.createdAt|date('Y-m-d H:i:s') : '' }}</td>

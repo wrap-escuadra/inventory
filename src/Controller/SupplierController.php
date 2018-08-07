@@ -55,6 +55,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier): Response
     {
+        // dd($supplier);
         return $this->render('supplier/show.html.twig', ['supplier' => $supplier]);
     }
 
@@ -63,12 +64,15 @@ class SupplierController extends Controller
      */
     public function edit(Request $request, Supplier $supplier): Response
     {
-        $form = $this->createForm(SupplierType::class, $supplier);
+        $supplierStatus = $this->getDoctrine()->getRepository(SupplierStatus::class)->findAll();
+        $choices = ['choices' => $supplierStatus];
+
+        $form = $this->createForm(SupplierType::class, $supplier,$choices);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('notice' ,'Supplier successfully updated');
             return $this->redirectToRoute('supplier_edit', ['id' => $supplier->getId()]);
         }
 
